@@ -1,0 +1,14 @@
+species_en,species_ru,mass_kg,vocal_fold_length_mm,min_f0_hz,max_f0_hz
+Greater horseshoe bat,летучая мышь,0.02,1,2000,80000
+House Mouse,мышь,0.05,1,1000,9000
+Laboratory Rat,крыса,0.4,2,500,6000
+Guinea pig,морская свинка,0.8,2,250,4000
+Human,мужчина,75,16,90,450
+Human,женщина,60,10,120,800
+Rhesus monkey,макака,5.75,8.05,100,1800
+Raccoon,енот-полоскун,5,4,200,4000
+Domestic Dog,собака,10,8,60,1500
+Rocky Mountain elk,олень,200,20,100,2400
+African Lion,лев,250,38,20,250
+Siberian Tiger,тигр,300,40,20,250
+African Elephant,слон,5000,100,14,35
