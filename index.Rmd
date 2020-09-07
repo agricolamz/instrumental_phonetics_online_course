@@ -1,0 +1,495 @@
+---
+title: "Дополнительные материалы для онлайн курса инструментальной фонетики"
+author: "Г. А. Мороз"
+date: "`r Sys.Date()`"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# 1 неделя
+
+[Audacity](https://www.audacityteam.org/download/)
+[Praat](http://www.fon.hum.uva.nl/praat/)
+
+# 2 неделя
+# 3 неделя
+
+Praat скрипты, написанные в последнем видео:
+
+```
+selectObject: "TextGrid untitled"
+Get number of points: 3
+```
+
+```
+selectObject: "TextGrid untitled"
+Get number of intervals: 3
+```
+
+# 4 неделя
+
+[R](https://cloud.r-project.org/)
+[Rstudio](https://rstudio.com/products/rstudio/download/#download)
+<https://rstudio.cloud/> -- позволяет иметь аналог RStudio, не устанавливая ничего на свой компьютер
+
+
+```{r, error=TRUE}
+2+2
+2+3+4+5
+2-5
+2*9
+9/3
+9.5*2
+2^3
+9^(1/2)
+27^(1/3)
+22/3
+22/2
+22 %% 3 
+21/3
+sin(3)
+sin(2*pi)
+cos(2*pi)
+cos(pi)
+exp(1)
+sqrt(4)
+2*(4+3)
+2*4+3
+4^(1/2)
+4^1/2
+9^(1/2)
+9^1/2
+sin(cos(pi))
+2*sin(cos(pi))
+2
+pi
+"sdeogmq;"
+"sdeogmq; asdqf"
+TRUE
+FALSE
+32+4i
+c(3, 4, 1, 0)
+c(TRUE, FALSE, TRUE)
+c("hi", "how", "are", "you")
+c("hi how are you")
+length(c(TRUE, FALSE, TRUE))
+1:5
+-3:5
+5:3
+5:-3
+1:200
+200:1
+200:1+5
+200:1*2
+200:1 %% 4
+sin(200:1)
+round(x = sin(200:1), digits = 3)
+round(digits = 3, x = sin(200:1))
+round(3, sin(200:1))
+round(sin(200:1), digits = 2)
+round(sin(200:1))
+?round
+seq(5, 100, by = 3)
+seq(0, 1, by = 0.01)
+seq(0, 1, length.out = 1000)
+seq(0, 1, length.out = 10)
+seq(0, 1, length.out = 11) + seq(0, 1, length.out = 10)
+seq(0, 1, length.out = 11) + seq(0, 1, length.out = 11)
+x <- seq(0, 1, length.out = 11)
+x + 5
+x + 1:11
+x
+x <- x + 1:11
+x
+y <- 3
+x + y
+round(x, y)
+# creating x
+x <- c(2, 3, 9, 10, 12)
+# evaluating x
+5+3+x
+
+x > 5
+x < 5
+x >= 3
+x > 3
+x <= 5
+x == 3
+x != 3
+x == rev(x)
+
+x[3]
+x[3:5]
+x[c(1, 3, 5)]
+x[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
+x[x <= 5]
+
+y <- c(x, NA, x)
+y + 3
+mean(y)
+mean(y, na.rm = TRUE)
+min(y, na.rm = TRUE)
+max(y, na.rm = TRUE)
+median(y, na.rm = TRUE)
+sd(y, na.rm = TRUE)
+is.na(y)
+c(1:500, NA, 500:1)
+sum(is.na(c(1:500, 500:1)))
+
+library(phonTools)
+
+data(a96)
+vowelplot(a96$f1, 
+          a96$f2, 
+          a96$vowel, 
+          logaxes = 'xy', 
+          xsampa = TRUE)
+```
+
+
+```{r, eval = FALSE}
+install.packages(c("phonTools", 
+                   "tidyverse",
+                   "vowels",
+                   "phonfieldwork"))
+```
+
+
+```{r}
+library(tidyverse)
+
+tm <- tibble(title = c("The Secret of Kells", 
+                 "Song of the Sea", 
+                 "Kahlil Gibran's The Prophet", 
+                 "The Breadwinner", 
+                 "Wolfwalkers"),
+       year = c(2009, 2014, 2014, 2017, 2020),
+       director = c(TRUE, TRUE, TRUE, FALSE, TRUE))
+
+tm$year > 2015
+
+tm[2, 3]
+
+tm[2, 2:3]
+tm[2,]
+tm[,1]
+tm$title
+
+tm[tm$year >= 2014,]
+data.frame(title = c("The Secret of Kells", 
+                     "Song of the Sea", 
+                     "Kahlil Gibran's The Prophet", 
+                     "The Breadwinner", 
+                     "Wolfwalkers"),
+           year = c(2009, 2014, 2014, 2017, 2020),
+           director = c(TRUE, TRUE, TRUE, FALSE, TRUE))
+```
+
+
+```{r, eval = FALSE}
+library(tidyverse)
+df <- read_csv("a96.csv")
+df[2,]
+
+library(readxl)
+df <- read_xlsx("a96.xlsx")
+
+df <- read_csv("/.../a96.csv")
+
+write_csv(df, "a96_new.csv")
+
+df
+
+ggplot(data = df, aes(x = f1, 
+                      y = f2, 
+                      color = sex))+
+  geom_point()
+
+
+ggplot(data = df, aes(x = f2, 
+                      y = f1, 
+                      color = sex,
+                      label = vowel))+
+  geom_text()+
+  scale_x_reverse()+
+  scale_y_reverse()+
+  labs(title = "Our first graph in R",
+       subtitle = "Formant frequency information for vowels averaged across 6 male speakers",
+       caption = "data from package phofTools")
+
+ggplot(data = df, aes(x = sex, 
+                      y = f1, 
+                      color = sex))+
+  geom_boxplot()+
+  geom_point()
+
+ggplot(data = df[-1,], aes(x = sex, 
+                           fill = sex))+
+  geom_bar()
+```
+
+# 5 неделя
+
+```{r, warning=FALSE, error = TRUE}
+library(vowels)
+data(ohiovowels)
+
+ggplot(data = ohiovowels, 
+       aes(x = F2, 
+           y = F1, 
+           color = speaker,
+           label = vowel.frame))+
+  geom_text()+
+  scale_x_reverse()+
+  scale_y_reverse()
+
+vowelplot(ohiovowels, color="vowels", label="vowels")
+
+
+par(mfrow=c(2,1))
+vowelplot(compute.means(ohiovowels), shape="vowels")
+vowelplot(compute.means(norm.lobanov(ohiovowels)), shape="vowels")
+
+par(mfrow=c(1,1))
+vowelplot(norm.nearey(ohiovowels), 
+          speaker="JOHG09", 
+          color="speakers", 
+          labels="vowels")
+add.vowelplot(compute.means(norm.nearey(ohiovowels), speaker="JOHG09"), color=NA, size=2,
+              labels="vowels")
+
+library(phonTools)
+data(sound)
+plot(sound)
+spectrogram(sound, colors = FALSE)
+```
+
+
+## phonfieldwork
+```{r, eval = FALSE}
+stimuli <- c("tip", "tap", "top")
+library(phonfieldwork)
+create_presentation(stimuli = stimuli, 
+                    output_dir = getwd())
+
+create_presentation(stimuli = stimuli, 
+                    translations = c("asd", "3wea", "poza"), 
+                    output_dir = getwd(), 
+                    output_file = "my_presentation")
+
+create_presentation(stimuli = c("tip", "r-logo.png", "tap", "r-logo.png"), 
+                    translations = c("asd", "3wea", "poza"),  
+                    external = c(2, 4),
+                    output_dir = getwd(), 
+                    output_file = "my_presentation")
+
+
+rename_soundfiles(stimuli, 
+                  path = "s1/")
+
+rename_soundfiles(stimuli, 
+                  path = "s2/",
+                  suffix = "_s1",
+                  prefix = paste0(1:3, "_"),
+                  backup = FALSE)
+
+get_sound_duration("s1/tap.wav")
+df <- get_sound_duration(sounds_from_folder = "s2/")
+
+concatenate_soundfiles(path = "s1/",
+                       result_file_name = "all")
+
+draw_sound(file_name = "s1/all.wav", 
+           annotation = "s1/all.TextGrid")
+
+annotate_textgrid(annotation = stimuli,
+                  textgrid = "s1/all.TextGrid")
+
+draw_sound(file_name = "s1/all.wav", 
+           annotation = "s1/all.TextGrid")
+
+create_subannotation(textgrid = "s1/all.TextGrid", 
+                     tier = 1, 
+                     n_of_annotations = 7)
+
+draw_sound(file_name = "s1/all.wav", 
+           annotation = "s1/all.TextGrid")
+
+annotate_textgrid(annotation = rep(c("", "u1", "", "u2", "",  "u3", ""), 3), 
+                  tier = 3,
+                  textgrid = "s1/all.TextGrid")
+
+draw_sound(file_name = "s1/all.wav", 
+           annotation = "s1/all.TextGrid")
+
+annotate_textgrid(annotation = rep(c("", "u1", "", "u2", "",  "u3", ""), 3), 
+                  tier = 3,
+                  textgrid = "s1/all.TextGrid", backup = FALSE)
+
+draw_sound(file_name = "s1/all.wav", 
+           annotation = "s1/all.TextGrid")
+
+dir.create("s1/sounds")
+extract_intervals(file_name = "s1/all.wav", 
+                  textgrid = "s1/all.TextGrid", 
+                  tier = 3, 
+                  path = "s1/sounds")
+
+dir.create("s1/images")
+draw_sound(sounds_from_folder = "s1/sounds/",
+           pic_folder_name = "images")
+
+df <- data.frame(stimuli = c("tap", "tip", "top"), 
+                 speaker = "s1")
+
+create_viewer(audio_dir = "s1/sounds/", 
+              picture_dir = "s1/images/", 
+              table = df, 
+              output_dir = "s1")
+
+draw_sound("s1/all.wav", window = "gaussian", dynamic_range = 65, 
+           spectrum_info = FALSE)
+
+draw_sound("s1/all.wav",  spectrum_info = FALSE,
+           frequency_range = c(0, 12))
+
+
+draw_sound("s1/all.wav",  spectrum_info = FALSE, zoom = c(0.4, 0.8))
+
+draw_sound("s1/all.wav",  
+           spectrum_info = FALSE, from = 0.3, to = 1, 
+           annotation = "s1/all.TextGrid")
+
+exb_to_df(system.file("extdata", "test.exb", package = "phonfieldwork"))
+
+draw_sound("s1/all.wav",  
+           spectrum_info = FALSE,
+           annotation = exb_to_df(system.file("extdata", "test.exb", package = "phonfieldwork")))
+
+draw_sound("s1/all.wav",  
+           spectrum_info = FALSE,
+           annotation = eaf_to_df(system.file("extdata", "test.eaf", package = "phonfieldwork")))
+
+draw_sound("s1/all.wav",  
+           spectrum_info = FALSE,
+           annotation = srt_to_df(system.file("extdata", "test.srt", package = "phonfieldwork")))
+```
+
+# 6 неделя
+
+Спектральный срез:
+
+```{r, eval = FALSE}
+library(tidyverse)
+df <- read_csv("...Table")
+
+df %>% 
+  filter(`freq(Hz)` <= 5000) %>% 
+  ggplot(aes(`freq(Hz)`, `pow(dB/Hz)`))+
+  geom_line()
+```
+
+Форманты гласного:
+
+```{r, eval = FALSE}
+library(tidyverse)
+library(phonfieldwork)
+formant_to_df("...Formant") %>% 
+  ggplot(aes(time_start, frequency))+
+  geom_point()
+```
+
+Форманты гласного:
+
+```{r}
+library(phonfieldwork)
+draw_sound(system.file("extdata", "test.wav", package = "phonfieldwork"),
+           system.file("extdata", "test.TextGrid", package = "phonfieldwork"),
+           formant_df = formant_to_df(system.file("extdata", "e.Formant",
+                                                   package = "phonfieldwork")))
+```
+
+Спектральный срез:
+
+```{r, eval = FALSE}
+library(tidyverse)
+df <- read_csv("...Table")
+
+df %>% 
+  ggplot(aes(`freq(Hz)`, `pow(dB/Hz)`))+
+  geom_line()
+```
+
+
+# 7 неделя
+
+Praat скрипт
+```
+form Get Formants from annotation
+  comment Where should the script write a result file
+  text directory /home/agricolamz/Desktop/
+  comment How should the script name a result file
+  text resultfile formant
+  comment tier number
+  integer my_tier 1
+endform
+
+my_sound = selected("Sound")
+my_textgrid = selected("TextGrid")
+select my_textgrid
+number_of_intervals = Get number of intervals... my_tier
+for b from 1 to number_of_intervals
+	interval_label$ = Get label of interval... 1 'b'
+		if interval_label$ <> ""
+			start = Get starting point... 1 'b'
+			end = Get end point... 1 'b'
+                    	duration = end - start
+			select my_sound
+			s = Extract part: start, end, "rectangular", 1, "yes"
+			f = To Formant (burg): 0, 5, 4500, 0.025, 50
+			t = Down to Table: "no", "yes", 6, "no", 3, "yes", 3, "no"
+			Append column: "start"
+			Append column: "end"
+			Append column: "duration"
+			Append column: "label"
+			nrow = Get number of rows
+			for j from 1 to nrow
+				Set numeric value: j, "start", start
+				Set numeric value: j, "end", end
+				Set numeric value: j, "duration", duration
+				Set string value: j, "label", interval_label$
+			endfor
+			Save as comma-separated file: "'directory$''resultfile$'_'b'.csv"
+			removeObject: s
+			removeObject: f
+			removeObject: t
+			select my_textgrid
+		endif
+endfor
+```
+
+R скрипт
+
+```{r, eval = FALSE}
+library(tidyverse)
+setwd("...")
+map_dfr(list.files(), function(i){
+  read_csv(i) %>% 
+    mutate(file = i) %>% 
+    mutate_all(as.character) %>% 
+    mutate_all(function(x){str_replace(x, "--undefined--", NA_character_)}) 
+}) ->
+  formants
+
+formants %>% 
+  mutate(`F1(Hz)` = as.double(`F1(Hz)`),
+         `F2(Hz)` = as.double(`F2(Hz)`)) %>% 
+  group_by(file, label) %>% 
+  summarise(mean_f1 = mean(`F1(Hz)`),
+            mean_f2 = mean(`F2(Hz)`)) %>% 
+  ggplot(aes(mean_f2, mean_f1, label = label, color = label))+
+  geom_text()+
+  scale_x_reverse()+
+  scale_y_reverse()
+```
